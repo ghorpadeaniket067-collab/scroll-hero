@@ -15,8 +15,7 @@ export default function Hero() {
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      /* ================= INTRO ================= */
-
+      /* Intro animation */
       const tl = gsap.timeline();
 
       tl.from(headlineRef.current.children, {
@@ -35,41 +34,26 @@ export default function Hero() {
         ease: "power2.out",
       }, "-=0.4");
 
-      /* ================= SCROLL CAR ================= */
-
+      /* Scroll animation for car */
       gsap.to(carRef.current, {
-        x: 500,
-        rotate: 8,
-        scale: 1.1,
+        x: 250,
+        y: -20,
+        rotate: 1.5,
+        scale: 1.05,
         ease: "none",
         scrollTrigger: {
           trigger: carRef.current,
-          start: "top center",
-          end: "bottom top",
-          scrub: 1.5,
+          start: "top 90%",
+          end: "bottom 20%",
+          scrub: 1.2,
         },
       });
 
-      /* ================= WHEEL ROTATION ILLUSION ================= */
-
-      gsap.to(carRef.current, {
-        rotation: "+=360",
-        scrollTrigger: {
-          trigger: carRef.current,
-          start: "top center",
-          end: "bottom top",
-          scrub: 2,
-        },
-      });
-
-      /* ================= PROGRESS BAR ================= */
-
+      /* Progress bar */
       gsap.to(progressRef.current, {
         scaleX: 1,
         ease: "none",
-        scrollTrigger: {
-          scrub: true,
-        },
+        scrollTrigger: { scrub: true },
       });
 
     });
@@ -80,10 +64,10 @@ export default function Hero() {
   const text = "WELCOME ITZ FIZZ";
 
   return (
-    <section className="relative h-screen overflow-hidden bg-black text-white flex flex-col items-center justify-center">
+    <section className="relative min-h-screen bg-black text-white flex flex-col items-center justify-center py-32">
 
-      {/* Scroll progress */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-white/20">
+      {/* Progress bar */}
+      <div className="fixed top-0 left-0 w-full h-1 bg-white/20 z-20">
         <div ref={progressRef} className="h-full bg-white origin-left scale-x-0"/>
       </div>
 
@@ -98,7 +82,7 @@ export default function Hero() {
       </h1>
 
       {/* Stats */}
-      <div ref={statsRef} className="flex gap-10 text-center">
+      <div ref={statsRef} className="flex gap-10 text-center mb-16">
         <div>
           <p className="text-3xl font-bold">98%</p>
           <p className="opacity-70 text-sm">Client Satisfaction</p>
@@ -115,14 +99,16 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Car */}
-      <img
-        ref={carRef}
-        src="/car.png"
-        className="absolute bottom-10 w-[380px] pointer-events-none"
-      />
+      {/* Car BELOW text */}
+      <div className="w-full max-w-5xl flex justify-center mt-24">
+        <img
+          ref={carRef}
+          src="/car.png"
+          className="w-[420px] pointer-events-none will-change-transform"
+        />
+      </div>
 
-      {/* Parallax background */}
+      {/* Background glow */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-neutral-900 via-black to-black blur-[60px]" />
     </section>
   );
